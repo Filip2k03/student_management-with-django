@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Enrollment</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #e74c3c;
+    }
+    
+    .form-container {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 2.5rem;
+      margin: 3rem auto;
+      max-width: 800px;
+    }
+
+    .form-control-custom {
+      border: 2px solid #dfe6e9;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control-custom:focus {
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+    }
+
+    .input-icon {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary-color);
+    }
+  </style>
+</head>
+<body style="background: linear-gradient(135deg, #f5f6fa 0%, #dcdde1 100%); min-height: 100vh;">
+  <div class="form-container">
+    <h2 class="display-5 text-center mb-5" style="color: var(--primary-color);">
+      <i class="bi bi-person-plus-fill me-2"></i>New Student Enrollment
+    </h2>
+
+    <form method="POST" class="needs-validation" novalidate>
+      {% csrf_token %}
+      
+      <div class="row gx-4 gy-3 mb-4">
+        <div class="col-md-6 position-relative">
+          <label class="form-label fw-bold mb-2">Full Name</label>
+          <input type="text" name="name" class="form-control form-control-custom" 
+                 placeholder="John Doe" required>
+          <i class="bi bi-person-badge input-icon"></i>
+        </div>
+
+        <div class="col-md-6 position-relative">
+          <label class="form-label fw-bold mb-2">Date of Birth</label>
+          <input type="date" name="dob" class="form-control form-control-custom" required>
+          <i class="bi bi-calendar-event input-icon"></i>
+        </div>
+      </div>
+
+      <div class="row gx-4 gy-3 mb-4">
+        <div class="col-md-6 position-relative">
+          <label class="form-label fw-bold mb-2">NRC Number</label>
+          <input type="text" name="nrc" class="form-control form-control-custom" 
+                 placeholder="12/ABC(N)123456" pattern="\d{1,2}\/[A-Za-z]+\([A-Za-z]\)\d{6}" required>
+          <i class="bi bi-file-text input-icon"></i>
+        </div>
+
+        <div class="col-md-6 position-relative">
+          <label class="form-label fw-bold mb-2">Guardian Information</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-gender-male"></i></span>
+            <input type="text" name="father_name" class="form-control form-control-custom" 
+                   placeholder="Father's Name" required>
+          </div>
+          <div class="input-group mt-2">
+            <span class="input-group-text"><i class="bi bi-gender-female"></i></span>
+            <input type="text" name="mother_name" class="form-control form-control-custom" 
+                   placeholder="Mother's Name" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="row gx-4 gy-3 mb-4">
+        <div class="col-md-6 position-relative">
+          <label class="form-label fw-bold mb-2">Contact Details</label>
+          <input type="tel" name="phone" class="form-control form-control-custom" 
+                 placeholder="+95 9XX XXX XXXX" pattern="\+95\s9\d{1}\s\d{3}\s\d{3,4}" required>
+          <i class="bi bi-phone input-icon"></i>
+        </div>
+
+        <div class="col-md-6 position-relative">
+          <label class="form-label fw-bold mb-2">Address</label>
+          <textarea name="address" class="form-control form-control-custom" 
+                    rows="3" style="resize: none;" required></textarea>
+          <i class="bi bi-house-door input-icon"></i>
+        </div>
+      </div>
+
+      <div class="row gx-4 gy-3 mb-4">
+        <div class="col-md-6 position-relative">
+          <label class="form-label fw-bold mb-2">Academic Information</label>
+          <select class="form-select form-control-custom" name="grade" required>
+            <option value="" disabled selected>Select Grade</option>
+            <option value="10">Grade 10</option>
+            <option value="11">Grade 11</option>
+            <option value="12">Grade 12</option>
+          </select>
+        </div>
+
+        <div class="col-md-6 position-relative">
+          <label class="form-label fw-bold mb-2">Nationality</label>
+          <input list="countries" name="country" class="form-control form-control-custom" 
+                 placeholder="Select Country" required>
+          <datalist id="countries">
+            <option value="Myanmar">
+            <option value="Singapore">
+            <option value="Thailand">
+            <option value="Malaysia">
+            <option value="Other">
+          </datalist>
+        </div>
+      </div>
+
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+        <button type="submit" class="btn btn-lg text-white" 
+                style="background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+                       border: none; padding: 0.75rem 2rem; border-radius: 15px;">
+          <i class="bi bi-save2 me-2"></i>Complete Enrollment
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Form validation
+    (() => {
+      'use strict'
+      const forms = document.querySelectorAll('.needs-validation')
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+    })()
+  </script>
+</body>
+</html>

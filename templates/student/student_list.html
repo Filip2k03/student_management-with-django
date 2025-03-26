@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% block title %}Student List{% endblock %}
+
+{% block content %}
+<div class="container-main">
+  <h2 class="display-5 text-center mb-4" style="color: var(--primary-color);">Student Directory</h2>
+
+  <!-- Action Bar -->
+  <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mb-4">
+    <form method="get" class="d-flex gap-2 flex-grow-1">
+      <input type="text" name="q" value="{{ query }}" 
+             placeholder="Search students..." 
+             class="form-control search-input shadow-sm"
+             style="border-radius: 25px; border: 1px solid var(--primary-color);">
+      <button type="submit" class="btn btn-primary px-4" 
+              style="border-radius: 25px; background: var(--secondary-color); border: none;">
+        <i class="bi bi-search"></i> Search
+      </button>
+    </form>
+    
+    <div class="d-flex gap-2 justify-content-end">
+      <a href="{% url 'export_students' %}" 
+         class="btn btn-outline-primary d-flex align-items-center gap-2"
+         style="border-radius: 25px;">
+        <i class="bi bi-download"></i> Export
+      </a>
+      <a href="{% url 'import_students' %}" 
+         class="btn btn-outline-success d-flex align-items-center gap-2"
+         style="border-radius: 25px;">
+        <i class="bi bi-upload"></i> Import
+      </a>
+      <a href="{% url 'create_student' %}" 
+         class="btn btn-primary d-flex align-items-center gap-2"
+         style="border-radius: 25px; background: var(--secondary-color); border: none;">
+        <i class="bi bi-plus-lg"></i> New Student
+      </a>
+    </div>
+  </div>
+
+  <!-- Data Table -->
+  <div class="table-responsive rounded-3 shadow-sm">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="sticky-top" style="background: var(--primary-color); color: white;">
+        <tr>
+          <th>ID</th>
+          <th>Student</th>
+          <th>Date of Birth</th>
+          <th>Parents</th>
+          <th>Contact</th>
+          <th>Grade</th>
+          <th>Nationality</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in page_obj %}
+        <tr style="cursor: pointer; " >
+          <td class="fw-bold text-muted" >#{{ student.id }}</td>
+          <td>
+            <div class="d-flex align-items-center gap-2">
+              <div class="avatar-sm bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center">
+                {{ student.name|first }}
+              </div>
+              {{ student.name }}
+            </div>
+          </td>
+          <td>{{ student.dob|date:"M d, Y" }}</td>
+          <td>
+            <div class="text-muted small">
+              <div>{{ student.father_name }}</div>
+              <div>{{ student.mother_name }}</div>
+            </div>
+          </td>
+          <td>
+            <div class="text-nowrap">
+              <div>{{ student.phone }}</div>
+              <div class="text-muted small">{{ student.address|truncatechars:20 }}</div>
+            </div>
+          </td>
+          <td>
+            <span class="badge bg-primary-subtle text-primary">
+              Grade {{ student.grade }}
+            </span>
+          </td>
+          <td>{{ student.country|upper }}</td>
+        </a>
+          <td class="text-end">
+            <div class="d-flex gap-2 justify-content-end">
+              <a href="{% url 'student_detail' student.id %}" 
+                 class="btn btn-sm btn-outline-success px-3"
+                 style="border-radius: 20px;">
+                 Details
+              </a>
+              <a href="{% url 'edit_student' student.id %}" 
+                 class="btn btn-sm btn-outline-warning px-3"
+                 style="border-radius: 20px;">
+                 Edit
+              </a>
+              <a href="{% url 'delete_student' student.id %}" 
+                 class="btn btn-sm btn-danger px-3"
+                 style="border-radius: 20px;">
+                 Delete
+              </a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <nav class="mt-4">
+    <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page=1&q={{ query }}" 
+             style="border-radius: 20px; margin-right: 8px;">
+            <i class="bi bi-chevron-double-left"></i>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}" 
+             style="border-radius: 20px; margin-right: 8px;">
+            Previous
+          </a>
+        </li>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <li class="page-item active">
+            <span class="page-link" 
+                  style="border-radius: 20px; margin-right: 8px; background: var(--secondary-color);">
+              {{ num }}
+            </span>
+          </li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ num }}&q={{ query }}" 
+               style="border-radius: 20px; margin-right: 8px;">
+              {{ num }}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ query }}" 
+             style="border-radius: 20px; margin-right: 8px;">
+            Next
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&q={{ query }}" 
+             style="border-radius: 20px;">
+            <i class="bi bi-chevron-double-right"></i>
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+
+<style>
+  .avatar-sm {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+  .table-hover tbody tr:hover {
+    background-color: rgba(52, 152, 219, 0.05);
+    transform: translateX(4px);
+    transition: all 0.2s ease;
+  }
+  .badge.bg-primary-subtle {
+    background-color: rgba(52, 152, 219, 0.1) !important;
+    color: var(--secondary-color) !important;
+    padding: 0.35em 0.65em;
+  }
+  .search-input:focus {
+    border-color: var(--secondary-color) !important;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15) !important;
+  }
+  .page-link {
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    min-width: 40px;
+    text-align: center;
+  }
+  .page-link:hover {
+    background: var(--secondary-color) !important;
+    color: white !important;
+    border-color: var(--secondary-color);
+  }
+</style>
+{% endblock %}
+
+git config --global user.email "stephanfilip7@gmail.com"
+  git config --global user.name "Filip2k03"

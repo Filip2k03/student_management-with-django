@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Import Students</h2>
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="excel_file">Upload XLSX File:</label>
+    <input type="file" name="excel_file" required>
+    <button type="submit">Import</button>
+  </form>
+{% endblock %}

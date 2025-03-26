@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Detail{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Student Detail</h2>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <p><strong>ID:</strong> {{ student.id }}</p>
+            <p><strong>Name:</strong> {{ student.name }}</p>
+            <p><strong>Date of Birth:</strong> {{ student.dob }}</p>
+            <p><strong>NRC:</strong> {{ student.nrc }}</p>
+        </div>
+        <div class="col-md-6">
+            <p><strong>Father's Name:</strong> {{ student.father_name }}</p>
+            <p><strong>Mother's Name:</strong> {{ student.mother_name }}</p>
+            <p><strong>Phone:</strong> {{ student.phone }}</p>
+            <p><strong>Address:</strong> {{ student.address }}</p>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <p><strong>Grade:</strong> {{ student.grade }}</p>
+        </div>
+        <div class="col-md-6">
+            <p><strong>Country:</strong> {{ student.country }}</p>
+        </div>
+    </div>
+    </div>
+  <h3>Subjects and Marks</h3>
+  <table class="table table-bordered">
+      <thead class="thead-light">
+          <tr>
+              <th>Year</th>
+              <th>Subject</th>
+              <th>Marks 1</th>
+              <th>Marks 2</th>
+              <th>Marks 3</th>
+              <th>Marks 4</th>
+              <th>Marks 5</th>
+              <th>Marks 6</th>
+              <th>Total Marks</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for subject in subjects %}
+              <tr>
+                  <td>{{ subject.year }}</td>
+                  <td>Subject {{ forloop.counter }}</td>
+                  <td>{{ subject.subject1_marks }}</td>
+                  <td>{{ subject.subject2_marks }}</td>
+                  <td>{{ subject.subject3_marks }}</td>
+                  <td>{{ subject.subject4_marks }}</td>
+                  <td>{{ subject.subject5_marks }}</td>
+                  <td>{{ subject.subject6_marks }}</td>
+                  <td>{{ subject.total_marks }}</td>
+              </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+  <!-- add years -->
+   <a href=""></a>
+  <h3>Total Marks: {{ total_marks }}</h3>
+  <div class="mt-4">
+      <a class="btn btn-primary" href="{% url 'create_subject' %}">Create New Subject</a>
+      <a class="btn btn-secondary" href="{% url 'student_list' %}">Back to Student List</a>
+  </div>
+</div>
+{% endblock %}

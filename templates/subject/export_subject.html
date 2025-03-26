@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Export Subjects{% endblock %}
+
+{% block content %}
+<h2>Export Subjects</h2>
+
+<!-- Export Button -->
+<a href="{% url 'export_subjects' %}">
+    <button>Export to XLSX</button>
+</a>
+
+<!-- Back to Subject List -->
+<a href="{% url 'subject_list' %}"><button>Back to Subject List</button></a>
+
+{% endblock %}
