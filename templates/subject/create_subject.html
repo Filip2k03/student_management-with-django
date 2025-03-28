@@ -44,7 +44,7 @@
 <body style="background: linear-gradient(135deg, #f5f6fa 0%, #dcdde1 100%); min-height: 100vh;">
   <div class="form-container">
     <h2 class="display-5 text-center mb-5" style="color: var(--primary-color);">
-      <i class="bi bi-journal-plus me-2"></i>Create Academic Record
+     Create Academic Record
     </h2>
 
     <form method="POST" class="needs-validation" novalidate>
@@ -65,7 +65,7 @@
 
       <!-- Academic Details -->
       <div class="mb-4">
-        <label class="form-label fw-bold mb-3"><i class="bi bi-calendar-week me-2"></i>Academic Year</label>
+        <label class="form-label fw-bold mb-3">Academic Year</label>
         <div class="row gx-4 gy-3">
           <div class="col-md-6">
             <input type="number" name="year" id="year" 
@@ -80,7 +80,7 @@
 
       <!-- Subject Marks -->
       <div class="mb-4">
-        <label class="form-label fw-bold mb-3"><i class="bi bi-clipboard-data me-2"></i>Subject Marks</label>
+        <label class="form-label fw-bold mb-3">Subject Marks</label>
         <div class="row gx-4 gy-3">
           <div class="col-md-6">
             <label class="form-label">subject1_marks</label>
@@ -131,11 +131,11 @@
       <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
         <button type="submit" class="btn btn-lg text-white me-2"
                 style="background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
-                       border: none; padding: 0.75rem 2rem; border-radius: 15px;">
-          <i class="bi bi-save2 me-2"></i>Create Record
+                       border: none; font-size: 12px; border-radius: 15px;">
+          Create Record
         </button>
         <a href="{% url 'subject_list' %}" class="btn btn-lg btn-outline-secondary me-2"
-        style="padding: 0.75rem 2rem; border-radius: 15px;">
+        style=" border-radius: 15px;">
        Cancel
      </a>
       </div>

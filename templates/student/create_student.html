@@ -15,7 +15,7 @@
     
     .form-container {
       background: rgba(255, 255, 255, 0.95);
-      border-radius: 20px;
+      border-radius: 9px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       padding: 2.5rem;
       margin: 3rem auto;
@@ -25,7 +25,7 @@
     .form-control-custom {
       border: 2px solid #dfe6e9;
       border-radius: 12px;
-      padding: 1rem 1.25rem;
+      /* padding: 1rem 1.25rem; */
       transition: all 0.3s ease;
     }
 
@@ -46,7 +46,7 @@
 <body style="background: linear-gradient(135deg, #f5f6fa 0%, #dcdde1 100%); min-height: 100vh;">
   <div class="form-container">
     <h2 class="display-5 text-center mb-5" style="color: var(--primary-color);">
-      <i class="bi bi-person-plus-fill me-2"></i>New Student Enrollment
+      New Student Enrollment
     </h2>
 
     <form method="POST" class="needs-validation" novalidate>
@@ -57,13 +57,13 @@
           <label class="form-label fw-bold mb-2">Full Name</label>
           <input type="text" name="name" class="form-control form-control-custom" 
                  placeholder="John Doe" required>
-          <i class="bi bi-person-badge input-icon"></i>
+          
         </div>
 
         <div class="col-md-6 position-relative">
           <label class="form-label fw-bold mb-2">Date of Birth</label>
           <input type="date" name="dob" class="form-control form-control-custom" required>
-          <i class="bi bi-calendar-event input-icon"></i>
+          
         </div>
       </div>
 
@@ -72,7 +72,7 @@
           <label class="form-label fw-bold mb-2">NRC Number</label>
           <input type="text" name="nrc" class="form-control form-control-custom" 
                  placeholder="12/ABC(N)123456" pattern="\d{1,2}\/[A-Za-z]+\([A-Za-z]\)\d{6}" required>
-          <i class="bi bi-file-text input-icon"></i>
+         
         </div>
 
         <div class="col-md-6 position-relative">
@@ -95,14 +95,14 @@
           <label class="form-label fw-bold mb-2">Contact Details</label>
           <input type="tel" name="phone" class="form-control form-control-custom" 
                  placeholder="+95 9XX XXX XXXX" pattern="\+95\s9\d{1}\s\d{3}\s\d{3,4}" required>
-          <i class="bi bi-phone input-icon"></i>
+          
         </div>
 
         <div class="col-md-6 position-relative">
           <label class="form-label fw-bold mb-2">Address</label>
           <textarea name="address" class="form-control form-control-custom" 
                     rows="3" style="resize: none;" required></textarea>
-          <i class="bi bi-house-door input-icon"></i>
+         
         </div>
       </div>
 
@@ -134,8 +134,8 @@
       <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
         <button type="submit" class="btn btn-lg text-white" 
                 style="background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
-                       border: none; padding: 0.75rem 2rem; border-radius: 15px;">
-          <i class="bi bi-save2 me-2"></i>Complete Enrollment
+                       border: none;border-radius: 9px; font-size: 15px;">
+          Complete Enrollment
         </button>
       </div>
     </form>

@@ -9,37 +9,32 @@
   <!-- Action Bar -->
   <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mb-4">
     <form method="get" class="d-flex gap-2 flex-grow-1">
-      <input type="text" name="q" value="{{ query }}" 
-             placeholder="Search subjects..." 
-             class="form-control search-input shadow-sm"
-             style="border-radius: 25px; border: 1px solid var(--primary-color);">
-      <button type="submit" class="btn btn-primary px-4" 
-              style="border-radius: 25px; background: var(--secondary-color); border: none;">
-        <i class="bi bi-search"></i> Search
+      <input type="text" name="q" value="{{ query }}" placeholder="Search subjects..."
+        class="form-control search-input shadow-sm" style="border-radius: 9px; border: 1px solid var(--primary-color);">
+      <button type="submit" class="btn btn-primary px-4"
+        style="border-radius: 9px; background: var(--secondary-color); border: none;">
+        Search
       </button>
     </form>
-    
+
     <div class="d-flex gap-2 justify-content-end">
-      <a href="{% url 'export_subjects' %}" 
-         class="btn btn-outline-primary d-flex align-items-center gap-2"
-         style="border-radius: 25px;">
+      <a href="{% url 'export_subjects' %}" class="btn btn-outline-primary d-flex align-items-center gap-2"
+        style="border-radius: 9px;">
         <i class="bi bi-download"></i> Export
       </a>
-      <a href="{% url 'import_subjects' %}" 
-         class="btn btn-outline-success d-flex align-items-center gap-2"
-         style="border-radius: 25px;">
+      <a href="{% url 'import_subjects' %}" class="btn btn-outline-success d-flex align-items-center gap-2"
+        style="border-radius: 9px;">
         <i class="bi bi-upload"></i> Import
       </a>
-      <a href="{% url 'create_subject' %}" 
-         class="btn btn-primary d-flex align-items-center gap-2"
-         style="border-radius: 25px; background: var(--secondary-color); border: none;">
+      <a href="{% url 'create_subject' %}" class="btn btn-primary d-flex align-items-center gap-2"
+        style="border-radius: 9px; background: var(--secondary-color); border: none;">
         <i class="bi bi-plus-lg"></i> New Subject
       </a>
     </div>
   </div>
 
   <!-- Data Table -->
-  <div class="table-responsive rounded-3 shadow-sm">
+  <div class="table-responsive rounded-3 shadow-sm d-none d-md-block">
     <table class="table table-hover align-middle mb-0">
       <thead class="sticky-top" style="background: var(--primary-color); color: white;">
         <tr>
@@ -57,141 +52,222 @@
       </thead>
       <tbody>
         {% for subject in page_obj %}
-          <tr>
-            <td>
-              <div class="d-flex align-items-center gap-2">
-                <div class="avatar-sm bg-info text-white rounded-circle d-flex align-items-center justify-content-center">
-                  {{ subject.student.name|first }}
-                </div>
-                {{ subject.student.name }}
+        <tr>
+          <td>
+            <div class="d-flex align-items-center gap-2">
+              <div class="avatar-sm bg-info text-white rounded-circle d-flex align-items-center justify-content-center">
+                {{ subject.student.name|first }}
               </div>
-            </td>
-            <td>{{ subject.year }}</td>
-            <td class="{% if subject.subject1_marks < 40 %}text-danger{% endif %}">
-              {{ subject.subject1_marks }}
-            </td>
-            <td class="{% if subject.subject2_marks < 40 %}text-danger{% endif %}">
-              {{ subject.subject2_marks }}
-            </td>
-            <td class="{% if subject.subject3_marks < 40 %}text-danger{% endif %}">
-              {{ subject.subject3_marks }}
-            </td>
-            <td class="{% if subject.subject4_marks < 40 %}text-danger{% endif %}">
-              {{ subject.subject4_marks }}
-            </td>
-            <td class="{% if subject.subject5_marks < 40 %}text-danger{% endif %}">
-              {{ subject.subject5_marks }}
-            </td>
-            <td class="{% if subject.subject6_marks < 40 %}text-danger{% endif %}">
-              {{ subject.subject6_marks }}
-            </td>
-            <td>
-              <span class="badge bg-success-subtle text-success">
-                {{ subject.total_marks }}
-              </span>
-            </td>
-            <td class="text-end">
-              <div class="d-flex gap-2 justify-content-end">
-                
-                <a href="{% url 'edit_subject' subject.id %}" 
-                   class="btn btn-sm btn-outline-warning px-3"
-                   style="border-radius: 20px;">
-                   Edit
-                </a>
-                <a href="{% url 'delete_subject' subject.id %}" 
-                   class="btn btn-sm btn-danger px-3"
-                   style="border-radius: 20px;">
-                   Delete
-                </a>
-              </div>
-            </td>
-          </tr>
+              {{ subject.student.name }}
+            </div>
+          </td>
+          <td>{{ subject.year }}</td>
+          <td class="{% if subject.subject1_marks < 40 %}text-danger{% endif %}">
+            {{ subject.subject1_marks }}
+          </td>
+          <td class="{% if subject.subject2_marks < 40 %}text-danger{% endif %}">
+            {{ subject.subject2_marks }}
+          </td>
+          <td class="{% if subject.subject3_marks < 40 %}text-danger{% endif %}">
+            {{ subject.subject3_marks }}
+          </td>
+          <td class="{% if subject.subject4_marks < 40 %}text-danger{% endif %}">
+            {{ subject.subject4_marks }}
+          </td>
+          <td class="{% if subject.subject5_marks < 40 %}text-danger{% endif %}">
+            {{ subject.subject5_marks }}
+          </td>
+          <td class="{% if subject.subject6_marks < 40 %}text-danger{% endif %}">
+            {{ subject.subject6_marks }}
+          </td>
+          <td>
+            <span class="badge bg-success-subtle text-success">
+              {{ subject.total_marks }}
+            </span>
+          </td>
+          <td class="text-end">
+            <div class="d-flex gap-2 justify-content-end">
+
+              <a href="{% url 'edit_subject' subject.id %}" class="btn btn-sm btn-outline-warning px-3"
+                style="border-radius: 20px;">
+                Edit
+              </a>
+              <a href="{% url 'delete_subject' subject.id %}" class="btn btn-sm btn-danger px-3"
+                style="border-radius: 20px;">
+                Delete
+              </a>
+            </div>
+          </td>
+        </tr>
         {% endfor %}
       </tbody>
     </table>
+  </div>
+
+  <!-- mobile res table -->
+  <div class="d-md-none">
+    {% for subject in page_obj %}
+    <div class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div class="d-flex align-items-center gap-3">
+            <div class="avatar-sm bg-info text-white rounded-circle d-flex align-items-center justify-content-center">
+              {{ subject.student.name|first }}
+            </div>
+            <div>
+              <h6 class="mb-0">{{ subject.student.name }}</h6>
+              <small class="text-muted">{{ subject.year }}</small>
+            </div>
+          </div>
+          <span class="badge bg-success-subtle text-success">
+            {{ subject.total_marks }}
+          </span>
+        </div>
+
+        <div class="row g-2 mb-3">
+          {% for mark in subject.subject_marks_list %}
+          <div class="col-4">
+            <div class="text-center p-2 rounded {% if mark < 40 %}bg-danger-light{% endif %}">
+              <small class="text-muted d-block">Subj {{ forloop.counter }}</small>
+              <span class="{% if mark < 40 %}text-danger{% endif %}">{{ mark }}</span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="d-flex gap-2 justify-content-end">
+          <div class="dropdown"> <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+              data-bs-toggle="dropdown" data-bs-auto-close="outside" data-bs-boundary="viewport" aria-expanded="false"
+              style="border-radius: 20px;"> <i class="bi bi-three-dots-vertical"></i> </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+              <li><a class="dropdown-item d-flex align-items-center gap-2" href="{% url 'edit_subject' subject.id %}">
+                  <i class="bi bi-pencil-square"></i> Edit </a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item d-flex align-items-center gap-2 text-danger"
+                  href="{% url 'delete_subject' subject.id %}"> <i class="bi bi-trash3"></i> Delete </a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
   </div>
 
   <!-- Pagination -->
   <nav class="mt-4">
     <ul class="pagination justify-content-center">
       {% if page_obj.has_previous %}
-        <li class="page-item">
-          <a class="page-link" href="?page=1&q={{ query }}" 
-             style="border-radius: 20px; margin-right: 8px;">
-            <i class="bi bi-chevron-double-left"></i>
-          </a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}" 
-             style="border-radius: 20px; margin-right: 8px;">
-            Previous
-          </a>
-        </li>
+      <li class="page-item">
+        <a class="page-link" href="?page=1&q={{ query }}" style="border-radius: 20px; margin-right: 8px;">
+          <i class="bi bi-chevron-double-left"></i>
+        </a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}"
+          style="border-radius: 20px; margin-right: 8px;">
+          Previous
+        </a>
+      </li>
       {% endif %}
 
       {% for num in page_obj.paginator.page_range %}
-        {% if page_obj.number == num %}
-          <li class="page-item active">
-            <span class="page-link" 
-                  style="border-radius: 20px; margin-right: 8px; background: var(--secondary-color);">
-              {{ num }}
-            </span>
-          </li>
-        {% else %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ num }}&q={{ query }}" 
-               style="border-radius: 20px; margin-right: 8px;">
-              {{ num }}
-            </a>
-          </li>
-        {% endif %}
+      {% if page_obj.number == num %}
+      <li class="page-item active">
+        <span class="page-link" style="border-radius: 20px; margin-right: 8px; background: var(--secondary-color);">
+          {{ num }}
+        </span>
+      </li>
+      {% else %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ num }}&q={{ query }}" style="border-radius: 20px; margin-right: 8px;">
+          {{ num }}
+        </a>
+      </li>
+      {% endif %}
       {% endfor %}
 
       {% if page_obj.has_next %}
-        <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ query }}" 
-             style="border-radius: 20px; margin-right: 8px;">
-            Next
-          </a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&q={{ query }}" 
-             style="border-radius: 20px;">
-            <i class="bi bi-chevron-double-right"></i>
-          </a>
-        </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ query }}"
+          style="border-radius: 20px; margin-right: 8px;">
+          Next
+        </a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&q={{ query }}" style="border-radius: 20px;">
+          <i class="bi bi-chevron-double-right"></i>
+        </a>
+      </li>
       {% endif %}
     </ul>
   </nav>
 </div>
 
 <style>
+  .dropdown-menu {
+    transition: opacity 0.2s ease-in-out, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0;
+    transform: translateY(10px);
+    display: block !important;
+    pointer-events: none;
+  }
+
+  .dropdown-menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  @media (max-width: 768px) {
+    .dropdown-menu {
+      /* position: fixed !important; */
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%) translateY(100%);
+      width: 90%;
+      max-width: 300px;
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 16px 16px 0 0;
+    }
+
+    .dropdown-menu.show {
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
   .avatar-sm {
     width: 32px;
     height: 32px;
     font-size: 14px;
   }
+
   .badge.bg-success-subtle {
     background-color: rgba(40, 167, 69, 0.1) !important;
     color: #28a745 !important;
     padding: 0.35em 0.65em;
   }
+
   .table-hover tbody tr:hover {
     background-color: rgba(52, 152, 219, 0.05);
     transform: translateX(4px);
     transition: all 0.2s ease;
   }
+
   .page-link {
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
     min-width: 40px;
     text-align: center;
   }
+
   .page-link:hover {
     background: var(--secondary-color) !important;
     color: white !important;
     border-color: var(--secondary-color);
   }
+
   .text-danger {
     font-weight: 500;
   }
