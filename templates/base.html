@@ -84,6 +84,10 @@
     <nav class="container-main">
       <ul class="nav nav-pills justify-content-center">
         <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'subject_list' %}active{% endif %}" 
+             href="{% url 'index' %}">Home</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link {% if request.resolver_match.url_name == 'student_list' %}active{% endif %}" 
              href="{% url 'student_list' %}">Student List</a>
         </li>
