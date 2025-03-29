@@ -7,6 +7,8 @@ from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
+from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 
 def index(request):
@@ -45,7 +47,7 @@ def student_list(request):
 def create_student(request):
     if request.method == "POST":
         name = request.POST.get('name')
-        dob = request.POST.get('dob')
+        dob_str = request.POST.get('dob')
         nrc = request.POST.get('nrc')
         father_name = request.POST.get('father_name')
         mother_name = request.POST.get('mother_name')
@@ -53,22 +55,57 @@ def create_student(request):
         address = request.POST.get('address')
         grade = request.POST.get('grade')
         country = request.POST.get('country')
+        student_year = request.POST.get('year')  # Get the year for the student
 
-        student = Student(name=name, dob=dob, nrc=nrc, father_name=father_name,
-                          mother_name=mother_name, phone=phone, address=address,
-                          grade=grade, country=country)
-        student.save()
-        return redirect('student_list')  # After creation, redirect to student list
+        subject1_marks = request.POST.get('subject1_marks')
+        subject2_marks = request.POST.get('subject2_marks')
+        subject3_marks = request.POST.get('subject3_marks')
+        subject4_marks = request.POST.get('subject4_marks')
+        subject5_marks = request.POST.get('subject5_marks')
+        subject6_marks = request.POST.get('subject6_marks')
+
+        try:
+            dob = timezone.datetime.strptime(dob_str, '%Y-%m-%d').date()
+            student = Student.objects.create(
+                name=name,
+                dob=dob,
+                nrc=nrc,
+                father_name=father_name,
+                mother_name=mother_name,
+                phone=phone,
+                address=address,
+                grade=grade,
+                country=country,
+                year_id=student_year,  # Set the year for the student
+            )
+
+            # Create Subject marks for the student
+            Subject.objects.create(
+                student=student,
+                year=student_year,
+                subject1_marks=subject1_marks,
+                subject2_marks=subject2_marks,
+                subject3_marks=subject3_marks,
+                subject4_marks=subject4_marks,
+                subject5_marks=subject5_marks,
+                subject6_marks=subject6_marks,
+            )
+
+            return redirect('student_list')  # After creation, redirect to student list
+        except (ValueError, ValidationError) as e:
+            error_message = "Invalid data: " + str(e)
+            return render(request, 'student/create_student.html', {'error_message': error_message})
 
     return render(request, 'student/create_student.html')  # Render a form for student creation
 
-# Edit an existing student
 def edit_student(request, student_id):
     student = get_object_or_404(Student, id=student_id)
-    
+    existing_subjects = Subject.objects.filter(student=student).order_by('year') # Fetch existing subjects, ordered by year
+
     if request.method == "POST":
+        # Handle the main student data update
         student.name = request.POST.get('name')
-        student.dob = request.POST.get('dob')
+        dob_str = request.POST.get('dob')
         student.nrc = request.POST.get('nrc')
         student.father_name = request.POST.get('father_name')
         student.mother_name = request.POST.get('mother_name')
@@ -76,11 +113,40 @@ def edit_student(request, student_id):
         student.address = request.POST.get('address')
         student.grade = request.POST.get('grade')
         student.country = request.POST.get('country')
-        student.save()
-        return redirect('student_list')  # After edit, redirect to student list
-    
-    return render(request, 'student/edit_student.html', {'student': student})  # Show the student data in form
 
+        # Handle the new subject data
+        new_subject_year = request.POST.get('new_subject_year')
+        new_subject1_marks = request.POST.get('new_subject1_marks')
+        new_subject2_marks = request.POST.get('new_subject2_marks')
+        new_subject3_marks = request.POST.get('new_subject3_marks')
+        new_subject4_marks = request.POST.get('new_subject4_marks')
+        new_subject5_marks = request.POST.get('new_subject5_marks')
+        new_subject6_marks = request.POST.get('new_subject6_marks')
+
+        try:
+            student.dob = timezone.datetime.strptime(dob_str, '%Y-%m-%d').date()
+            student.save()
+
+            # Create a new Subject entry if the new subject form was submitted
+            if new_subject_year and new_subject1_marks and new_subject2_marks and new_subject3_marks and new_subject4_marks and new_subject5_marks and new_subject6_marks:
+                Subject.objects.create(
+                    student=student,
+                    year=new_subject_year,
+                    subject1_marks=new_subject1_marks,
+                    subject2_marks=new_subject2_marks,
+                    subject3_marks=new_subject3_marks,
+                    subject4_marks=new_subject4_marks,
+                    subject5_marks=new_subject5_marks,
+                    subject6_marks=new_subject6_marks,
+                )
+
+            return redirect('student_list')
+        except (ValueError, ValidationError) as e:
+            error_message = "Invalid data: " + str(e)
+            return render(request, 'student/edit_student.html',
+                          {'student': student, 'existing_subjects': existing_subjects, 'error_message': error_message})
+
+    return render(request, 'student/edit_student.html', {'student': student, 'existing_subjects': existing_subjects})
 # Delete a student
 def delete_student(request, student_id):
     student = get_object_or_404(Student, id=student_id)

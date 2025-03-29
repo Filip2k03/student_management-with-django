@@ -41,6 +41,9 @@
       transform: translateY(-50%);
       color: var(--primary-color);
     }
+    #subjectMarksForm {
+    display: none; /* Initially hide the form */
+}
   </style>
 </head>
 <body style="background: linear-gradient(135deg, #f5f6fa 0%, #dcdde1 100%); min-height: 100vh;">
@@ -63,11 +66,8 @@
 
         <div class="col-md-6 position-relative">
           <label class="form-label fw-bold mb-2">Date of Birth</label>
-          <input type="date" name="dob" id="dob" 
-                 class="form-control form-control-custom"
-                 value="{{ student.dob }}" required>
-          <i class="bi bi-calendar-event input-icon"></i>
-        </div>
+          <input type="date" name="dob" class="form-control form-control-custom"
+                 value="{{ student.dob|date:'Y-m-d' }}" required>
       </div>
 
       <div class="row gx-4 gy-3 mb-4">
@@ -142,9 +142,85 @@
         </div>
       </div>
 
+      
+
+
+      <!-- Subject Marks -->
+      <button type="button" class="btn btn-outline-secondary mb-3" id="toggleSubjectForm">
+        Add/Edit Subject Performance
+    </button>
+
+    <div id="subjectMarksForm">
+        <h5 class="fw-bold mb-3"><i class="bi bi-graph-up me-2"></i>Subject Performance</h5>
+        <div class="row gx-4 gy-3">
+            <div class="col-md-6">
+                <label class="form-label">Year</label>
+                <input type="number" name="new_subject_year" class="form-control form-control-custom" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Subject 1 Marks</label>
+                <input type="number" step="0.01" name="new_subject1_marks" class="form-control form-control-custom" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Subject 2 Marks</label>
+                <input type="number" step="0.01" name="new_subject2_marks" class="form-control form-control-custom" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Subject 3 Marks</label>
+                <input type="number" step="0.01" name="new_subject3_marks" class="form-control form-control-custom" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Subject 4 Marks</label>
+                <input type="number" step="0.01" name="new_subject4_marks" class="form-control form-control-custom" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Subject 5 Marks</label>
+                <input type="number" step="0.01" name="new_subject5_marks" class="form-control form-control-custom" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Subject 6 Marks</label>
+                <input type="number" step="0" name="new_subject6_marks" class="form-control form-control-custom" required>
+            </div>
+        </div>
+    </div>
+      <h5 class="fw-bold mb-3"><i class="bi bi-table me-2"></i>Existing Subject Performance</h5>
+      {% if existing_subjects %}
+      <div class="table-responsive mb-4">
+          <table class="table table-bordered">
+              <thead>
+                  <tr>
+                      <th>Year</th>
+                      <th>Subject 1 Marks</th>
+                      <th>Subject 2 Marks</th>
+                      <th>Subject 3 Marks</th>
+                      <th>Subject 4 Marks</th>
+                      <th>Subject 5 Marks</th>
+                      <th>Subject 6 Marks</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for subject in existing_subjects %}
+                  <tr>
+                      <td>{{ subject.year }}</td>
+                      <td>{{ subject.subject1_marks }}</td>
+                      <td>{{ subject.subject2_marks }}</td>
+                      <td>{{ subject.subject3_marks }}</td>
+                      <td>{{ subject.subject4_marks }}</td>
+                      <td>{{ subject.subject5_marks }}</td>
+                      <td>{{ subject.subject6_marks }}</td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+      {% else %}
+          <p>No subject information available for this student yet.</p>
+      {% endif %}
+      
+
       <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
         <button type="submit" class="btn btn-lg btn-primary rounded" style="font-size: 15px;">
-            <i class="bi bi-save2 me-2"></i>Update Profile
+            <i class="bi bi-save2 me-2"></i>Update
         </button>
         <a href="{% url 'student_list' %}" class="btn btn-lg btn-outline-secondary ">
             Cancel
@@ -169,6 +245,28 @@
         }, false)
       })
     })()
+
+    const toggleButton = document.getElementById('toggleSubjectForm');
+        const subjectMarksForm = document.getElementById('subjectMarksForm');
+
+        toggleButton.addEventListener('click', () => {
+            subjectMarksForm.style.display = subjectMarksForm.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Form validation (keep this)
+        (() => {
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
   </script>
 </body>
 </html>
