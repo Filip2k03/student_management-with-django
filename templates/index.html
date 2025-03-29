@@ -1,1 +1,36 @@
 {% extends 'base.html' %}
+
+{% block content %}
+<h1>Welcome to the Student Management System</h1>
+
+<div class="container">
+    <h2>About Our System</h2>
+    <p>This Student Management System is designed to streamline and simplify the process of managing student information, academic records, and related data. Whether you are an administrator, teacher, or student, this platform provides the tools you need for efficient organization and access to important information.</p>
+    <p>Our goal is to create a user-friendly and robust system that enhances communication, reduces administrative overhead, and ultimately contributes to a better educational environment. We understand the importance of accurate and easily accessible data in today's educational landscape, and this system is built with that in mind.</p>
+</div>
+
+<div class="container">
+    <h2>Key Features</h2>
+    <p>The Student Management System offers a range of features to help you manage student data effectively:</p>
+    <ul class="features">
+        <li><strong>Student Profiles:</strong> Maintain detailed records of each student, including personal information, contact details, and enrollment history.</li>
+        <li><strong>Subject Management:</strong> Easily manage and assign subjects to students, keeping track of their academic progress.</li>
+        <li><strong>Year-Based Records:</strong> Organize student and subject information based on academic years for better tracking and reporting.</li>
+        <li><strong>Marks and Performance:</strong> Record and manage student marks for each subject, with features to calculate total marks and potentially generate performance reports.</li>
+        <li><strong>User-Friendly Interface:</strong> Designed with simplicity in mind, the system is easy to navigate and use for individuals with varying levels of technical expertise.</li>
+        <li><strong>Secure Data Storage:</strong> Your data is important, and we prioritize its security through robust storage and access control mechanisms.</li>
+    </ul>
+</div>
+
+<div class="container">
+    <h2>Getting Started</h2>
+    <p>To begin using the Student Management System, you will need to have the application set up and running. Please refer to the system documentation or contact your system administrator for setup instructions and login credentials.</p>
+    <p>Once you have access, you can start exploring the various features and functionalities. We encourage you to familiarize yourself with the different sections and tools available to make the most of the system.</p>
+</div>
+
+<div class="call-to-action">
+    <p>Ready to experience a more efficient way to manage student information?</p>
+    <a href="{% url 'student_list' %}" class="button">Access the System</a>
+    <p>(Link will be provided once the system is deployed)</p>
+</div>
+{% endblock %}
