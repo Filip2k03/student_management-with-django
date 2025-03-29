@@ -103,7 +103,7 @@
           <input type="tel" name="phone" id="phone"
                  class="form-control form-control-custom"
                  value="{{ student.phone }}"
-                 pattern="\+95\s9\d{1}\s\d{3}\s\d{3,4}" required>
+                  required>
           <i class="bi bi-phone input-icon"></i>
         </div>
 
@@ -143,13 +143,14 @@
       </div>
 
       <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-        <button type="submit" class="btn btn-lg text-white me-2"
-                style="background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
-                       border: none; padding: 0.75rem 2rem; border-radius: 15px;">
+        <button type="submit" class="btn btn-lg text-white" 
+        style="background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+               border: none;border-radius: 9px; font-size: 15px;">
           <i class="bi bi-save2 me-2"></i>Update Profile
         </button>
         <a href="{% url 'student_list' %}" class="btn btn-lg btn-outline-secondary"
-           style="padding: 0.75rem 2rem; border-radius: 15px;">
+        style="background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+               border: none; font-size: 9px; border-radius: 15px;">
           Cancel
         </a>
       </div>
