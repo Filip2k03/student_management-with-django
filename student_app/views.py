@@ -35,7 +35,7 @@ def student_list(request):
     if query:
         students = students.filter(name__icontains=query)  # Filter students by name (case-insensitive)
 
-    paginator = Paginator(students, 10)  # Show 10 students per page
+    paginator = Paginator(students, 3)  # Show 10 students per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
