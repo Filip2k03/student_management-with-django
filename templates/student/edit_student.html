@@ -340,9 +340,7 @@ $(document).on("click", ".edit", function () {
             </div>
             <div class="table-responsive mb-4">
                 <div class="table-wrapper">
-                    <div class="col-sm-6">
-                        <button type="button" class="btn btn-primary mb-3" id="add-subject-btn">Add Subject</button>
-                    </div>
+                   
                 
                     <form method="post">
                         {% csrf_token %}
@@ -382,7 +380,8 @@ $(document).on("click", ".edit", function () {
                                 <label for="subject6_marks">Subject 6 Marks</label>
                                 <input type="number" class="form-control" name="subjects[{{ subject.id }}][subject6_marks]" value="{{ subject.subject6_marks }}" required>
                             </div>
-                
+                            
+                           
                             <div class="form-group subject-row">
                                 <a href="{% url 'delete_subject' subject.id %}" class="btn btn-sm btn-danger px-3 delete-row-btn"
                                    style="border-radius: 20px;">
@@ -395,7 +394,10 @@ $(document).on("click", ".edit", function () {
                     </form>
                 </div>
                     <!-- </form> -->
-            
+                    <div class="col-sm-6">
+                        <button type="button" class="btn btn-primary mb-3" id="add-subject-btn">Add Subject</button>
+                    </div>
+                    
                     
             
             <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
@@ -455,84 +457,101 @@ $(document).on("click", ".edit", function () {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+ document.addEventListener('DOMContentLoaded', function() {
+    const subjectContainer = document.getElementById('subject-container');
+    const addSubjectButton = document.getElementById('add-subject-btn');
 
-document.addEventListener('DOMContentLoaded', function() {
-        const subjectContainer = document.getElementById('subject-container');
-        const addSubjectButton = document.getElementById('add-subject-btn');
+    // Function to create a new subject row
+    function createNewSubjectRow(rowId = null) {
+        const newSubjectRow = document.createElement('div');
+        newSubjectRow.classList.add('form-group', 'subject-row');
 
-        addSubjectButton.addEventListener('click', function() {
-            const newSubjectRow = document.createElement('div');
-            newSubjectRow.classList.add('form-group', 'subject-row');
+        newSubjectRow.innerHTML = `
+            <div class="form-group subject-row">
+                <label for="year">Year</label>
+                <input type="text" class="form-control" name="new_subject_year[]" required>
+            </div>
 
-            // Generate a unique ID for the new row (you might need this for more complex scenarios)
-            const newRowId = 'new-subject-' + Date.now();
+            <div class="form-group subject-row">
+                <label for="subject1_marks">Subject 1 Marks</label>
+                <input type="number" class="form-control" name="new_subject1_marks[]" required min="0" max="100">
+            </div>
 
-            newSubjectRow.innerHTML = `
-                <div class="form-group subject-row">
-                    <label for="year">Year</label>
-                    <input type="text" class="form-control" name="new_subjects[${newRowId}][year]" required>
-                </div>
+            <div class="form-group subject-row">
+                <label for="subject2_marks">Subject 2 Marks</label>
+                <input type="number" class="form-control" name="new_subject2_marks[]" required min="0" max="100">
+            </div>
 
-                <div class="form-group subject-row">
-                    <label for="subject1_marks">Subject 1 Marks</label>
-                    <input type="number" class="form-control" name="new_subjects[${newRowId}][subject1_marks]" required>
-                </div>
+            <div class="form-group subject-row">
+                <label for="subject3_marks">Subject 3 Marks</label>
+                <input type="number" class="form-control" name="new_subject3_marks[]" required min="0" max="100">
+            </div>
 
-                <div class="form-group subject-row">
-                    <label for="subject2_marks">Subject 2 Marks</label>
-                    <input type="number" class="form-control" name="new_subjects[${newRowId}][subject2_marks]" required>
-                </div>
+            <div class="form-group subject-row">
+                <label for="subject4_marks">Subject 4 Marks</label>
+                <input type="number" class="form-control" name="new_subject4_marks[]" required min="0" max="100">
+            </div>
 
-                <div class="form-group subject-row">
-                    <label for="subject3_marks">Subject 3 Marks</label>
-                    <input type="number" class="form-control" name="new_subjects[${newRowId}][subject3_marks]" required>
-                </div>
+            <div class="form-group subject-row">
+                <label for="subject5_marks">Subject 5 Marks</label>
+                <input type="number" class="form-control" name="new_subject5_marks[]" required min="0" max="100">
+            </div>
 
-                <div class="form-group subject-row">
-                    <label for="subject4_marks">Subject 4 Marks</label>
-                    <input type="number" class="form-control" name="new_subjects[${newRowId}][subject4_marks]" required>
-                </div>
+            <div class="form-group subject-row">
+                <label for="subject6_marks">Subject 6 Marks</label>
+                <input type="number" class="form-control" name="new_subject6_marks[]" required min="0" max="100">
+            </div>
 
-                <div class="form-group subject-row">
-                    <label for="subject5_marks">Subject 5 Marks</label>
-                    <input type="number" class="form-control" name="new_subjects[${newRowId}][subject5_marks]" required>
-                </div>
+            <div class="form-group subject-row">
+                <button type="button" class="btn btn-sm btn-danger px-3 delete-row-btn" style="border-radius: 20px;">
+                    Delete
+                </button>
+            </div>
+        `;
 
-                <div class="form-group subject-row">
-                    <label for="subject6_marks">Subject 6 Marks</label>
-                    <input type="number" class="form-control" name="new_subjects[${newRowId}][subject6_marks]" required>
-                </div>
+        // ... (rest of your JavaScript for delete button and input restrictions)
+        const deleteButton = newSubjectRow.querySelector('.delete-row-btn');
+        deleteButton.addEventListener('click', function() {
+            subjectContainer.removeChild(newSubjectRow);
+        });
 
-                <div class="form-group subject-row">
-                    <button type="button" class="btn btn-sm btn-danger px-3 delete-row-btn" style="border-radius: 20px;">
-                        Delete
-                    </button>
-                </div>
-            `;
-
-            subjectContainer.appendChild(newSubjectRow);
-
-            // Add event listener to the delete button in the newly added row
-            const deleteButton = newSubjectRow.querySelector('.delete-row-btn');
-            deleteButton.addEventListener('click', function() {
-                subjectContainer.removeChild(newSubjectRow);
+        newSubjectRow.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('input', function() {
+                const value = parseFloat(this.value);
+                if (value < 0) this.value = 0;
+                if (value > 100) this.value = 100;
             });
         });
 
-        // Event listener for delete buttons in existing rows
-        subjectContainer.addEventListener('click', function(event) {
-            if (event.target.classList.contains('delete-row-btn')) {
-                event.preventDefault(); // Prevent default link behavior
-                const rowToDelete = event.target.closest('.subject-row');
-                if (rowToDelete) {
-                    // For existing rows, the delete button has a link.
-                    // Removing it from the DOM doesn't delete it from the database.
-                    // The server-side view will handle deletion based on the link.
-                    subjectContainer.removeChild(rowToDelete);
-                }
-            }
+        return newSubjectRow;
+    }
+
+    addSubjectButton.addEventListener('click', function() {
+        const newRow = createNewSubjectRow(); // Don't need rowId here
+        subjectContainer.appendChild(newRow);
+    });
+
+
+    // Apply input restrictions to number fields on initial load
+    document.querySelectorAll('input[type="number"]').forEach(input => {
+        input.addEventListener('input', function() {
+            const value = parseFloat(this.value);
+            if (value < 0) this.value = 0;
+            if (value > 100) this.value = 100;
         });
     });
+
+    // Event listener for delete buttons in existing rows
+    subjectContainer.addEventListener('click', function(event) {
+        if (event.target.classList.contains('delete-row-btn')) {
+            event.preventDefault(); // Prevent default link behavior
+            const rowToDelete = event.target.closest('.subject-row');
+            if (rowToDelete) {
+                subjectContainer.removeChild(rowToDelete);
+            }
+        }
+    });
+});
         // Form validation
         (() => {
             'use strict'

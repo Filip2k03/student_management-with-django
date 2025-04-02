@@ -296,6 +296,13 @@
                 }, false)
             })
         })()
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+      input.addEventListener('input', function() {
+        const value = parseFloat(this.value);
+        if (value < 0) this.value = 0;
+        if (value > 100) this.value = 100;
+      });
+    });
   </script>
 </body>   
 </html>
