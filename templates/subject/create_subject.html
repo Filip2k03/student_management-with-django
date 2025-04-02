@@ -24,8 +24,8 @@
 
     .form-control-custom {
       border: 2px solid #dfe6e9;
-      border-radius: 12px;
-      padding: 1rem 1.25rem;
+      border-radius: 5px;
+     
       transition: all 0.3s ease;
     }
 
@@ -65,14 +65,14 @@
 
       <!-- Academic Details -->
       <div class="mb-4">
-        <label class="form-label fw-bold mb-3">Academic Year</label>
+        <label class="form-label fw-bold mb-3"> Year</label>
         <div class="row gx-4 gy-3">
           <div class="col-md-6">
             <input type="number" name="year" id="year" 
-                   class="form-control form-control-custom"
-                   min="2000" max="{% now 'Y' %}" 
-                   placeholder="Enter academic year"
-                   required>
+            class="form-control form-control-custom"
+            min="2000" max="{% now 'Y' %}" 
+            placeholder="Enter academic year"
+            required>
             <small class="input-hint">Format: YYYY (e.g., 2025)</small>
           </div>
         </div>
@@ -83,42 +83,42 @@
         <label class="form-label fw-bold mb-3">Subject Marks</label>
         <div class="row gx-4 gy-3">
           <div class="col-md-6">
-            <label class="form-label">subject1_marks</label>
+            <label class="form-label">Marks 1</label>
             <input type="number" step="1" name="subject1_marks" 
                    class="form-control form-control-custom"
                    min="0" max="100"
                    required>
           </div>
           <div class="col-md-6">
-            <label class="form-label">subject2_marks</label>
+            <label class="form-label">Marks 2</label>
             <input type="number" step="1" name="subject2_marks" 
                    class="form-control form-control-custom"
                    min="0" max="100"
                    required>
           </div>
           <div class="col-md-6">
-            <label class="form-label">subject3_marks</label>
+            <label class="form-label">Marks 3</label>
             <input type="number" step="1" name="subject3_marks" 
                    class="form-control form-control-custom"
                    min="0" max="100"
                    required>
           </div>
           <div class="col-md-6">
-            <label class="form-label">subject4_marks</label>
+            <label class="form-label">Marks 4</label>
             <input type="number" step="1" name="subject4_marks" 
                    class="form-control form-control-custom"
                    min="0" max="100"
                    required>
           </div>
           <div class="col-md-6">
-            <label class="form-label">subject5_marks</label>
+            <label class="form-label">Marks 5</label>
             <input type="number" step="1" name="subject5_marks" 
                    class="form-control form-control-custom"
                    min="0" max="100"
                    required>
           </div>
           <div class="col-md-6">
-            <label class="form-label">subject6_marks</label>
+            <label class="form-label">Marks 6</label>
             <input type="number" step="1" name="subject6_marks" 
                    class="form-control form-control-custom"
                    min="0" max="100"

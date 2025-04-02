@@ -24,8 +24,7 @@
 
     .form-control-custom {
       border: 2px solid #dfe6e9;
-      border-radius: 12px;
-      padding: 1rem 1.25rem;
+      border-radius: 5px;
       transition: all 0.3s ease;
     }
 
@@ -73,7 +72,6 @@
             <input type="number" name="year" id="year" 
                    class="form-control form-control-custom"
                    value="{{ subject.year }}"
-                   min="2000" max="{% now 'Y' %}" 
                    required>
           </div>
         </div>
@@ -85,7 +83,7 @@
         <div class="row gx-4 gy-3">
           <div class="col-md-6">
             <label class="form-label">Mathematics</label>
-            <input type="number" step="0.01" name="subject1_marks"
+            <input type="number" step="1" name="subject1_marks"
                    class="form-control form-control-custom"
                    value="{{ subject.subject1_marks }}"
                    min="0" max="100"
@@ -93,7 +91,7 @@
           </div>
           <div class="col-md-6">
             <label class="form-label">Science</label>
-            <input type="number" step="0.01" name="subject2_marks"
+            <input type="number" step=" " name="subject2_marks"
                    class="form-control form-control-custom"
                    value="{{ subject.subject2_marks }}"
                    min="0" max="100"
@@ -101,7 +99,7 @@
           </div>
           <div class="col-md-6">
             <label class="form-label">Literature</label>
-            <input type="number" step="0.01" name="subject3_marks"
+            <input type="number" step=" " name="subject3_marks"
                    class="form-control form-control-custom"
                    value="{{ subject.subject3_marks }}"
                    min="0" max="100"
@@ -109,7 +107,7 @@
           </div>
           <div class="col-md-6">
             <label class="form-label">History</label>
-            <input type="number" step="0.01" name="subject4_marks"
+            <input type="number" step=" " name="subject4_marks"
                    class="form-control form-control-custom"
                    value="{{ subject.subject4_marks }}"
                    min="0" max="100"
@@ -117,7 +115,7 @@
           </div>
           <div class="col-md-6">
             <label class="form-label">Geography</label>
-            <input type="number" step="0.01" name="subject5_marks"
+            <input type="number" step=" " name="subject5_marks"
                    class="form-control form-control-custom"
                    value="{{ subject.subject5_marks }}"
                    min="0" max="100"
@@ -125,7 +123,7 @@
           </div>
           <div class="col-md-6">
             <label class="form-label">Language</label>
-            <input type="number" step="0.01" name="subject6_marks"
+            <input type="number" step=" " name="subject6_marks"
                    class="form-control form-control-custom"
                    value="{{ subject.subject6_marks }}"
                    min="0" max="100"

@@ -18,7 +18,7 @@ def index(request):
 # Show student detail
 def student_detail(request, student_id):
     student = get_object_or_404(Student, id=student_id)
-    subjects = Subject.objects.filter(student=student)  # Fetch subjects for this student
+    subjects = Subject.objects.filter(student=student) .order_by('year')  # Fetch subjects for this student
     
     total_marks = 0
     for subject in subjects:
@@ -45,9 +45,10 @@ def student_list(request):
 
 # Create a new student
 def create_student(request):
-    if request.method == "POST":
+    if request.method == 'POST':
+        # Get data from form
         name = request.POST.get('name')
-        dob_str = request.POST.get('dob')
+        dob = request.POST.get('dob')
         nrc = request.POST.get('nrc')
         father_name = request.POST.get('father_name')
         mother_name = request.POST.get('mother_name')
@@ -55,53 +56,73 @@ def create_student(request):
         address = request.POST.get('address')
         grade = request.POST.get('grade')
         country = request.POST.get('country')
-        student_year = request.POST.get('year')  # Get the year for the student
 
-        subject1_marks = request.POST.get('subject1_marks')
-        subject2_marks = request.POST.get('subject2_marks')
-        subject3_marks = request.POST.get('subject3_marks')
-        subject4_marks = request.POST.get('subject4_marks')
-        subject5_marks = request.POST.get('subject5_marks')
-        subject6_marks = request.POST.get('subject6_marks')
+        nrc_exists = Student.objects.filter(nrc=nrc).exists()
+        if nrc_exists:
+            messages.error(request, "A student with this NRC number already exists.")
+            return redirect('create_student')  # Redirect back to the form
 
-        try:
-            dob = timezone.datetime.strptime(dob_str, '%Y-%m-%d').date()
-            student = Student.objects.create(
-                name=name,
-                dob=dob,
-                nrc=nrc,
-                father_name=father_name,
-                mother_name=mother_name,
-                phone=phone,
-                address=address,
-                grade=grade,
-                country=country,
-                year_id=student_year,  # Set the year for the student
-            )
+        # Validation (basic)
+        if not name or not dob or not nrc or not father_name or not mother_name or not phone or not address or not grade or not country:
+            messages.error(request, "Please fill in all the required fields.")
+            return redirect('create_student')  # Redirect back to form
 
-            # Create Subject marks for the student
-            Subject.objects.create(
-                student=student,
-                year=student_year,
-                subject1_marks=subject1_marks,
-                subject2_marks=subject2_marks,
-                subject3_marks=subject3_marks,
-                subject4_marks=subject4_marks,
-                subject5_marks=subject5_marks,
-                subject6_marks=subject6_marks,
-            )
+        # Save Student
+        student = Student(
+            name=name,
+            dob=dob,
+            nrc=nrc,
+            father_name=father_name,
+            mother_name=mother_name,
+            phone=phone,
+            address=address,
+            grade=grade,
+            country=country
+        )
+        student.save()
 
-            return redirect('student_list')  # After creation, redirect to student list
-        except (ValueError, ValidationError) as e:
-            error_message = "Invalid data: " + str(e)
-            return render(request, 'student/create_student.html', {'error_message': error_message})
+        # Handle multiple subject entries
+        years = request.POST.getlist('new_subject_year')
+        subject1_marks = request.POST.getlist('new_subject1_marks')
+        subject2_marks = request.POST.getlist('new_subject2_marks')
+        subject3_marks = request.POST.getlist('new_subject3_marks')
+        subject4_marks = request.POST.getlist('new_subject4_marks')
+        subject5_marks = request.POST.getlist('new_subject5_marks')
+        subject6_marks = request.POST.getlist('new_subject6_marks')
 
-    return render(request, 'student/create_student.html')  # Render a form for student creation
+        # Iterate through the submitted subject data and create Subject objects
+        for i in range(len(years)):
+            year = years[i]
+            marks1 = subject1_marks[i]
+            marks2 = subject2_marks[i]
+            marks3 = subject3_marks[i]
+            marks4 = subject4_marks[i]
+            marks5 = subject5_marks[i]
+            marks6 = subject6_marks[i]
+
+            # You might want to add validation here to ensure marks are not empty
+            if year and marks1 and marks2 and marks3 and marks4 and marks5 and marks6:
+                Subject.objects.create(
+                    student=student,
+                    year=year,
+                    subject1_marks=marks1,
+                    subject2_marks=marks2,
+                    subject3_marks=marks3,
+                    subject4_marks=marks4,
+                    subject5_marks=marks5,
+                    subject6_marks=marks6
+                )
+
+        # Display success message
+        messages.success(request, "Student successfully created!")
+        return redirect('student_list')  # Optionally, redirect to another page after success
+
+    return render(request, 'student/create_student.html') # Render a form for student creation
 
 def edit_student(request, student_id):
     student = get_object_or_404(Student, id=student_id)
     existing_subjects = Subject.objects.filter(student=student).order_by('year') # Fetch existing subjects, ordered by year
-
+    print(request.method)
     if request.method == "POST":
         # Handle the main student data update
         student.name = request.POST.get('name')
@@ -113,9 +134,10 @@ def edit_student(request, student_id):
         student.address = request.POST.get('address')
         student.grade = request.POST.get('grade')
         student.country = request.POST.get('country')
+        print(request.POST)
 
         # Handle the new subject data
-        new_subject_year = request.POST.get('new_subject_year')
+        new_subject_year = request.POST.get('year')
         new_subject1_marks = request.POST.get('new_subject1_marks')
         new_subject2_marks = request.POST.get('new_subject2_marks')
         new_subject3_marks = request.POST.get('new_subject3_marks')
@@ -159,7 +181,9 @@ def delete_student(request, student_id):
 # List all subjects
 def subject_list(request):
     query = request.GET.get('q', '')  # Get the search query from the URL
-    subjects = Subject.objects.all()
+    subjects = Subject.objects.all().order_by('year')  # Order by year in ascending order
+
+    
 
     if query:
         subjects = subjects.filter(student__name__icontains=query)  # Filter subjects by student name

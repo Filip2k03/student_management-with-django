@@ -28,7 +28,7 @@
       </a>
       <a href="{% url 'create_subject' %}" class="btn btn-primary d-flex align-items-center gap-2"
         style="border-radius: 9px; background: var(--secondary-color); border: none;">
-        <i class="bi bi-plus-lg"></i> New Subject
+        <i class="bi bi-plus-lg"></i> New
       </a>
     </div>
   </div>
@@ -63,26 +63,26 @@
           </td>
           <td>{{ subject.year }}</td>
           <td class="{% if subject.subject1_marks < 40 %}text-danger{% endif %}">
-            {{ subject.subject1_marks }}
+            {{ subject.subject1_marks|floatformat:0  }}
           </td>
           <td class="{% if subject.subject2_marks < 40 %}text-danger{% endif %}">
-            {{ subject.subject2_marks }}
+            {{ subject.subject2_marks|floatformat:0  }}
           </td>
           <td class="{% if subject.subject3_marks < 40 %}text-danger{% endif %}">
-            {{ subject.subject3_marks }}
+            {{ subject.subject3_marks|floatformat:0  }}
           </td>
           <td class="{% if subject.subject4_marks < 40 %}text-danger{% endif %}">
-            {{ subject.subject4_marks }}
+            {{ subject.subject4_marks|floatformat:0  }}
           </td>
           <td class="{% if subject.subject5_marks < 40 %}text-danger{% endif %}">
-            {{ subject.subject5_marks }}
+            {{ subject.subject5_marks|floatformat:0  }}
           </td>
           <td class="{% if subject.subject6_marks < 40 %}text-danger{% endif %}">
-            {{ subject.subject6_marks }}
+            {{ subject.subject6_marks|floatformat:0  }}
           </td>
           <td>
             <span class="badge bg-success-subtle text-success">
-              {{ subject.total_marks }}
+              {{ subject.total_marks|floatformat:0  }}
             </span>
           </td>
           <td class="text-end">

@@ -1,259 +1,539 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Student</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <style>
-    :root {
-      --primary-color: #2c3e50;
-      --secondary-color: #3498db;
-      --accent-color: #e74c3c;
-    }
-    
-    .form-container {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+        }
+
+        body {
+            color: #566787;
+            background: #f5f5f5;
+            font-family: 'Varela Round', sans-serif;
+            font-size: 13px;
+        }
+        .form-container {
       background: rgba(255, 255, 255, 0.95);
       border-radius: 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
       padding: 2.5rem;
       margin: 3rem auto;
-      max-width: 800px;
+      max-width: 1200px;
     }
 
     .form-control-custom {
       border: 2px solid #dfe6e9;
-      border-radius: 12px;
-      padding: 1rem 1.25rem;
+      border-radius: 5px;
       transition: all 0.3s ease;
     }
 
-    .form-control-custom:focus {
-      border-color: var(--secondary-color);
-      box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+    .student-info-card {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
     }
 
-    .input-icon {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--primary-color);
+        .table-responsive {
+            margin: 30px 0;
+        }
+
+        .table-wrapper {
+            background: #fff;
+            padding: 20px 25px;
+            border-radius: 3px;
+            min-width: 1000px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        }
+
+        .table-title {
+            padding-bottom: 15px;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 16px 30px;
+            min-width: 100%;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .table-title h2 {
+            margin: 5px 0 0;
+            font-size: 24px;
+        }
+
+        .table-title .btn-group {
+            float: right;
+        }
+
+        .table-title .btn {
+            color: #fff;
+            float: right;
+            font-size: 13px;
+            border: none;
+            min-width: 50px;
+            border-radius: 2px;
+            border: none;
+            outline: none !important;
+            margin-left: 10px;
+        }
+
+        .table-title .btn i {
+            float: left;
+            font-size: 21px;
+            margin-right: 5px;
+        }
+
+        .table-title .btn.add-new {
+            background: var(--secondary-color);
+        }
+
+        .table-title .btn.add-new:hover {
+            background: #2980b9;
+        }
+
+        table.table tr th,
+        table.table tr td {
+            border-color: #e9e9e9;
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+
+        table.table tr th:last-child td:last-child {
+            width: 100px;
+        }
+
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        table.table td a {
+            font-weight: bold;
+            color: #566787;
+            display: inline-block;
+            text-decoration: none;
+            outline: none !important;
+        }
+
+        table.table td a:hover {
+            color: var(--secondary-color);
+        }
+
+        table.table td a.edit {
+            color: #FFC107;
+        }
+
+        table.table td a.delete {
+            color: #F44336;
+        }
+
+        table.table td i {
+            font-size: 19px;
+        }
+
+        table.table td a.add i {
+            font-size: 24px;
+            margin-right: -1px;
+            position: relative;
+            top: 3px;
+        }
+
+        table.table .form-control {
+            height: 30px;
+            width: 80px;
+            box-shadow: none;
+            border: none;
+        }
+
+        table.table .form-control.error {
+            border-color: #f50000;
+        }
+
+        table.table td .add {
+            display: none;
+        }
+
+
+        /* .form-control-custom {
+            border: 2px solid #dfe6e9;
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control-custom:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+        }
+
+        .input-hint {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 0.25rem;
+        } */
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            var actions = $("table td:last-child").html();
+            // Append table with add row form on add new button click
+            $(".add-new").click(function () {
+    $(this).attr("disabled", "disabled");
+    var index = $("table tbody tr:last-child").index();
+    var row = '<tr style="text-align: center;">' +
+        '<td><input type="number" class="form-control" name="new_subject_year[]" id="year"></td>' +
+        '<td><input type="number" class="form-control" name="new_subject1_marks[]" id="subject1_marks"></td>' +
+        '<td><input type="number" class="form-control" name="new_subject2_marks[]" id="subject2_marks"></td>' +
+        '<td><input type="number" class="form-control" name="new_subject3_marks[]" id="subject3_marks"></td>' +
+        '<td><input type="number" class="form-control" name="new_subject4_marks[]" id="subject4_marks"></td>' +
+        '<td><input type="number" class="form-control" name="new_subject5_marks[]" id="subject5_marks"></td>' +
+        '<td><input type="number" class="form-control" name="new_subject6_marks[]" id="subject6_marks"></td>' +
+        '<td>' + actions + '</td>' +
+        '<td></td>' +
+        '</tr>';
+    $("table").append(row);
+    $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
+    $('[data-toggle="tooltip"]').tooltip();
+});
+           // Add row on add button click
+$(document).on("click", ".add", function () {
+    var empty = false;
+    var input = $(this).parents("tr").find('input[type="number"]'); // Change to number to match input fields
+    input.each(function () {
+        if (!$(this).val()) {
+            $(this).addClass("error");
+            empty = true;
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    $(this).parents("tr").find(".error").first().focus();
+    if (!empty) {
+        input.each(function () {
+            $(this).parent("td").html($(this).val());
+        });
+        $(this).parents("tr").find(".add, .edit").toggle();
+        $(".add-new").removeAttr("disabled");
     }
-    #subjectMarksForm {
-    display: none; /* Initially hide the form */
-}
-  </style>
+});
+
+// Edit row on edit button click
+$(document).on("click", ".edit", function () {
+    $(this).parents("tr").find("td:not(:last-child):not(:nth-last-child(2))").each(function () {
+        var currentVal = $(this).text();
+        $(this).html('<input type="number" class="form-control" value="' + currentVal + '">'); // Ensure input type is number
+    });
+    $(this).parents("tr").find(".add, .edit").toggle();
+    $(".add-new").attr("disabled", "disabled");
+});
+            // Delete row on delete button click
+            $(document).on("click", ".delete", function () {
+                $(this).parents("tr").remove();
+                $(".add-new").removeAttr("disabled");
+            });
+        });
+    </script>
 </head>
+
 <body style="background: linear-gradient(135deg, #f5f6fa 0%, #dcdde1 100%); min-height: 100vh;">
-  <div class="form-container">
-    <h2 class="display-5 text-center mb-5" style="color: var(--primary-color);">
-      <i class="bi bi-pencil-square me-2"></i>Edit Student Profile
-    </h2>
+    <div class="form-container">
+        <h2 class="display-5 text-center mb-5" style="color: var(--primary-color);">
+            <i class="bi bi-pencil-square me-2"></i>Edit Student Profile
+        </h2>
 
-    <form method="POST" class="needs-validation" novalidate>
-      {% csrf_token %}
-      
-      <div class="row gx-4 gy-3 mb-4">
-        <div class="col-md-6 position-relative">
-          <label class="form-label fw-bold mb-2">Full Name</label>
-          <input type="text" name="name" id="name" 
-                 class="form-control form-control-custom"
-                 value="{{ student.name }}" required>
-          <i class="bi bi-person-badge input-icon"></i>
-        </div>
+        <form method="POST" class="needs-validation" novalidate>
+            {% csrf_token %}
 
-        <div class="col-md-6 position-relative">
-          <label class="form-label fw-bold mb-2">Date of Birth</label>
-          <input type="date" name="dob" class="form-control form-control-custom"
-                 value="{{ student.dob|date:'Y-m-d' }}" required>
-      </div>
+            <div class="row gx-4 gy-3 mb-4">
+                <div class="col-md-6 position-relative">
+                    <label class="form-label fw-bold mb-2">Full Name</label>
+                    <input type="text" name="name" id="name" class="form-control form-control-custom"
+                        value="{{ student.name }}" required>
+                    <i class="bi bi-person-badge input-icon"></i>
+                </div>
 
-      <div class="row gx-4 gy-3 mb-4">
-        <div class="col-md-6 position-relative">
-          <label class="form-label fw-bold mb-2">NRC Number</label>
-          <input type="text" name="nrc" id="nrc" 
-                 class="form-control form-control-custom"
-                 value="{{ student.nrc }}"
-                 pattern="\d{1,2}\/[A-Za-z]+\([A-Za-z]\)\d{6}" required>
-          <i class="bi bi-file-text input-icon"></i>
-        </div>
-
-        <div class="col-md-6 position-relative">
-          <label class="form-label fw-bold mb-2">Guardian Information</label>
-          <div class="input-group">
-            <span class="input-group-text"><i class="bi bi-gender-male"></i></span>
-            <input type="text" name="father_name" id="father_name"
-                   class="form-control form-control-custom"
-                   value="{{ student.father_name }}" required>
-          </div>
-          <div class="input-group mt-2">
-            <span class="input-group-text"><i class="bi bi-gender-female"></i></span>
-            <input type="text" name="mother_name" id="mother_name"
-                   class="form-control form-control-custom"
-                   value="{{ student.mother_name }}" required>
-          </div>
-        </div>
-      </div>
-
-      <div class="row gx-4 gy-3 mb-4">
-        <div class="col-md-6 position-relative">
-          <label class="form-label fw-bold mb-2">Contact Details</label>
-          <input type="tel" name="phone" id="phone"
-                 class="form-control form-control-custom"
-                 value="{{ student.phone }}"
-                  required>
-          <i class="bi bi-phone input-icon"></i>
-        </div>
-
-        <div class="col-md-6 position-relative">
-          <label class="form-label fw-bold mb-2">Address</label>
-          <textarea name="address" id="address" 
-                    class="form-control form-control-custom"
-                    rows="3" style="resize: none;" required>{{ student.address }}</textarea>
-          <i class="bi bi-house-door input-icon"></i>
-        </div>
-      </div>
-
-      <div class="row gx-4 gy-3 mb-4">
-        <div class="col-md-6 position-relative">
-          <label class="form-label fw-bold mb-2">Academic Information</label>
-          <select class="form-select form-control-custom" name="grade" required>
-            <option value="{{ student.grade }}" selected>{{ student.grade }}</option>
-            <option value="10">Grade 10</option>
-            <option value="11">Grade 11</option>
-            <option value="12">Grade 12</option>
-          </select>
-        </div>
-
-        <div class="col-md-6 position-relative">
-          <label class="form-label fw-bold mb-2">Nationality</label>
-          <input list="countries" name="country" id="country"
-                 class="form-control form-control-custom"
-                 value="{{ student.country }}" required>
-          <datalist id="countries">
-            <option value="Myanmar">
-            <option value="Singapore">
-            <option value="Thailand">
-            <option value="Malaysia">
-            <option value="Other">
-          </datalist>
-        </div>
-      </div>
-
-      
-
-
-      <!-- Subject Marks -->
-      <button type="button" class="btn btn-outline-secondary mb-3" id="toggleSubjectForm">
-        Add/Edit Subject Performance
-    </button>
-
-    <div id="subjectMarksForm">
-        <h5 class="fw-bold mb-3"><i class="bi bi-graph-up me-2"></i>Subject Performance</h5>
-        <div class="row gx-4 gy-3">
-            <div class="col-md-6">
-                <label class="form-label">Year</label>
-                <input type="number" name="new_subject_year" class="form-control form-control-custom" required>
+                <div class="col-md-6 position-relative">
+                    <label class="form-label fw-bold mb-2">Date of Birth</label>
+                    <input type="date" name="dob" class="form-control form-control-custom"
+                        value="{{ student.dob|date:'Y-m-d' }}" required>
+                </div>
             </div>
-            <div class="col-md-6">
-                <label class="form-label">Subject 1 Marks</label>
-                <input type="number" step="0.01" name="new_subject1_marks" class="form-control form-control-custom" required>
+
+            <div class="row gx-4 gy-3 mb-4">
+                <div class="col-md-6 position-relative">
+                    <label class="form-label fw-bold mb-2">NRC Number</label>
+                    <input type="text" name="nrc" id="nrc" class="form-control form-control-custom"
+                        value="{{ student.nrc }}" pattern="\d{1,2}\/[A-Za-z]+\([A-Za-z]\)\d{6}" required>
+                   
+                </div>
+
+                <div class="col-md-6 position-relative">
+                    <label class="form-label fw-bold mb-2">Guardian Information</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-gender-male"></i></span>
+                        <input type="text" name="father_name" id="father_name" class="form-control form-control-custom"
+                            value="{{ student.father_name }}" required>
+                    </div>
+                    <div class="input-group mt-2">
+                        <span class="input-group-text"><i class="bi bi-gender-female"></i></span>
+                        <input type="text" name="mother_name" id="mother_name" class="form-control form-control-custom"
+                            value="{{ student.mother_name }}" required>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6">
-                <label class="form-label">Subject 2 Marks</label>
-                <input type="number" step="0.01" name="new_subject2_marks" class="form-control form-control-custom" required>
+
+            <div class="row gx-4 gy-3 mb-4">
+                <div class="col-md-6 position-relative">
+                    <label class="form-label fw-bold mb-2">Contact Details</label>
+                    <input type="tel" name="phone" id="phone" class="form-control form-control-custom"
+                        value="{{ student.phone }}" required>
+                    
+                </div>
+
+                <div class="col-md-6 position-relative">
+                    <label class="form-label fw-bold mb-2">Address</label>
+                    <textarea name="address" id="address" class="form-control form-control-custom" rows="3"
+                        style="resize: none;" required>{{ student.address }}</textarea>
+                     
+                </div>
             </div>
-            <div class="col-md-6">
-                <label class="form-label">Subject 3 Marks</label>
-                <input type="number" step="0.01" name="new_subject3_marks" class="form-control form-control-custom" required>
+
+            <div class="row gx-4 gy-3 mb-4">
+                <div class="col-md-6 position-relative">
+                    <label class="form-label fw-bold mb-2">Academic Information</label>
+                    <select class="form-select form-control-custom" name="grade" required>
+                        <option value="{{ student.grade }}" selected>{{ student.grade }}</option>
+                        <option value="10">Grade 10</option>
+                        <option value="11">Grade 11</option>
+                        <option value="12">Grade 12</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 position-relative">
+                    <label class="form-label fw-bold mb-2">Nationality</label>
+                    <input list="countries" name="country" id="country" class="form-control form-control-custom"
+                        value="{{ student.country }}" required>
+                    <datalist id="countries">
+                        <option value="Myanmar">
+                        <option value="Singapore">
+                        <option value="Thailand">
+                        <option value="Malaysia">
+                        <option value="Other">
+                    </datalist>
+                </div>
             </div>
-            <div class="col-md-6">
-                <label class="form-label">Subject 4 Marks</label>
-                <input type="number" step="0.01" name="new_subject4_marks" class="form-control form-control-custom" required>
+            <div class="table-responsive mb-4">
+                <div class="table-wrapper">
+                    <div class="col-sm-6">
+                        <button type="button" class="btn btn-primary mb-3" id="add-subject-btn">Add Subject</button>
+                    </div>
+                
+                    <form method="post">
+                        {% csrf_token %}
+                        <div id="subject-container">
+                            {% for subject in existing_subjects %}
+                            <div class="form-group subject-row">
+                                <label for="year">Year</label>
+                                <input type="text" class="form-control" name="subjects[{{ subject.id }}][year]" value="{{ subject.year }}" required>
+                            </div>
+                
+                            <div class="form-group subject-row">
+                                <label for="subject1_marks">Subject 1 Marks</label>
+                                <input type="number" class="form-control" name="subjects[{{ subject.id }}][subject1_marks]" value="{{ subject.subject1_marks }}" required>
+                            </div>
+                
+                            <div class="form-group subject-row">
+                                <label for="subject2_marks">Subject 2 Marks</label>
+                                <input type="number" class="form-control" name="subjects[{{ subject.id }}][subject2_marks]" value="{{ subject.subject2_marks }}" required>
+                            </div>
+                
+                            <div class="form-group subject-row">
+                                <label for="subject3_marks">Subject 3 Marks</label>
+                                <input type="number" class="form-control" name="subjects[{{ subject.id }}][subject3_marks]" value="{{ subject.subject3_marks }}" required>
+                            </div>
+                
+                            <div class="form-group subject-row">
+                                <label for="subject4_marks">Subject 4 Marks</label>
+                                <input type="number" class="form-control" name="subjects[{{ subject.id }}][subject4_marks]" value="{{ subject.subject4_marks }}" required>
+                            </div>
+                
+                            <div class="form-group subject-row">
+                                <label for="subject5_marks">Subject 5 Marks</label>
+                                <input type="number" class="form-control" name="subjects[{{ subject.id }}][subject5_marks]" value="{{ subject.subject5_marks }}" required>
+                            </div>
+                
+                            <div class="form-group subject-row">
+                                <label for="subject6_marks">Subject 6 Marks</label>
+                                <input type="number" class="form-control" name="subjects[{{ subject.id }}][subject6_marks]" value="{{ subject.subject6_marks }}" required>
+                            </div>
+                
+                            <div class="form-group subject-row">
+                                <a href="{% url 'delete_subject' subject.id %}" class="btn btn-sm btn-danger px-3 delete-row-btn"
+                                   style="border-radius: 20px;">
+                                    Delete
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+                    <!-- </form> -->
+            
+                    
+            
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                <button type="submit" class="btn btn-lg btn-primary rounded" style="font-size: 15px;">
+                    <i class="bi bi-save2 me-2"></i>Update Profile
+                </button>
+                <a href="{% url 'student_list' %}" class="btn btn-lg btn-outline-secondary ">
+                    Cancel
+                </a>
             </div>
-            <div class="col-md-6">
-                <label class="form-label">Subject 5 Marks</label>
-                <input type="number" step="0.01" name="new_subject5_marks" class="form-control form-control-custom" required>
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Subject 6 Marks</label>
-                <input type="number" step="0" name="new_subject6_marks" class="form-control form-control-custom" required>
-            </div>
-        </div>
+
+            <!-- <div class="mt-5">
+                <button type="button" class="btn btn-outline-secondary mb-3" id="toggleSubjectForm">
+                    Add/Edit Subject Performance
+                </button>
+
+                <div id="subjectMarksForm">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-graph-up me-2"></i>Subject Performance</h5>
+                    <div class="row gx-4 gy-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Year</label>
+                            <input type="number" name="new_subject_year" class="form-control form-control-custom" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Subject 1 Marks</label>
+                            <input type="number" step="0.01" name="new_subject1_marks" class="form-control form-control-custom" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Subject 2 Marks</label>
+                            <input type="number" step="0.01" name="new_subject2_marks" class="form-control form-control-custom" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Subject 3 Marks</label>
+                            <input type="number" step="0.01" name="new_subject3_marks" class="form-control form-control-custom" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Subject 4 Marks</label>
+                            <input type="number" step="0.01" name="new_subject4_marks" class="form-control form-control-custom" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Subject 5 Marks</label>
+                            <input type="number" step="0.01" name="new_subject5_marks" class="form-control form-control-custom" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Subject 6 Marks</label>
+                            <input type="number" step="0" name="new_subject6_marks" class="form-control form-control-custom" required>
+                        </div>
+                    </div>
+                </div> -->
+
+            
+
+               
+        </form>
     </div>
-      <h5 class="fw-bold mb-3"><i class="bi bi-table me-2"></i>Existing Subject Performance</h5>
-      {% if existing_subjects %}
-      <div class="table-responsive mb-4">
-          <table class="table table-bordered">
-              <thead>
-                  <tr>
-                      <th>Year</th>
-                      <th>Subject 1 Marks</th>
-                      <th>Subject 2 Marks</th>
-                      <th>Subject 3 Marks</th>
-                      <th>Subject 4 Marks</th>
-                      <th>Subject 5 Marks</th>
-                      <th>Subject 6 Marks</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {% for subject in existing_subjects %}
-                  <tr>
-                      <td>{{ subject.year }}</td>
-                      <td>{{ subject.subject1_marks }}</td>
-                      <td>{{ subject.subject2_marks }}</td>
-                      <td>{{ subject.subject3_marks }}</td>
-                      <td>{{ subject.subject4_marks }}</td>
-                      <td>{{ subject.subject5_marks }}</td>
-                      <td>{{ subject.subject6_marks }}</td>
-                  </tr>
-                  {% endfor %}
-              </tbody>
-          </table>
-      </div>
-      {% else %}
-          <p>No subject information available for this student yet.</p>
-      {% endif %}
-      
+    
 
-      <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-        <button type="submit" class="btn btn-lg btn-primary rounded" style="font-size: 15px;">
-            <i class="bi bi-save2 me-2"></i>Update
-        </button>
-        <a href="{% url 'student_list' %}" class="btn btn-lg btn-outline-secondary ">
-            Cancel
-        </a>
-    </div>
-    </form>
-  </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // Form validation
-    (() => {
-      'use strict'
-      const forms = document.querySelectorAll('.needs-validation')
-      Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-          if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
-          form.classList.add('was-validated')
-        }, false)
-      })
-    })()
+document.addEventListener('DOMContentLoaded', function() {
+        const subjectContainer = document.getElementById('subject-container');
+        const addSubjectButton = document.getElementById('add-subject-btn');
 
-    const toggleButton = document.getElementById('toggleSubjectForm');
-        const subjectMarksForm = document.getElementById('subjectMarksForm');
+        addSubjectButton.addEventListener('click', function() {
+            const newSubjectRow = document.createElement('div');
+            newSubjectRow.classList.add('form-group', 'subject-row');
 
-        toggleButton.addEventListener('click', () => {
-            subjectMarksForm.style.display = subjectMarksForm.style.display === 'none' ? 'block' : 'none';
+            // Generate a unique ID for the new row (you might need this for more complex scenarios)
+            const newRowId = 'new-subject-' + Date.now();
+
+            newSubjectRow.innerHTML = `
+                <div class="form-group subject-row">
+                    <label for="year">Year</label>
+                    <input type="text" class="form-control" name="new_subjects[${newRowId}][year]" required>
+                </div>
+
+                <div class="form-group subject-row">
+                    <label for="subject1_marks">Subject 1 Marks</label>
+                    <input type="number" class="form-control" name="new_subjects[${newRowId}][subject1_marks]" required>
+                </div>
+
+                <div class="form-group subject-row">
+                    <label for="subject2_marks">Subject 2 Marks</label>
+                    <input type="number" class="form-control" name="new_subjects[${newRowId}][subject2_marks]" required>
+                </div>
+
+                <div class="form-group subject-row">
+                    <label for="subject3_marks">Subject 3 Marks</label>
+                    <input type="number" class="form-control" name="new_subjects[${newRowId}][subject3_marks]" required>
+                </div>
+
+                <div class="form-group subject-row">
+                    <label for="subject4_marks">Subject 4 Marks</label>
+                    <input type="number" class="form-control" name="new_subjects[${newRowId}][subject4_marks]" required>
+                </div>
+
+                <div class="form-group subject-row">
+                    <label for="subject5_marks">Subject 5 Marks</label>
+                    <input type="number" class="form-control" name="new_subjects[${newRowId}][subject5_marks]" required>
+                </div>
+
+                <div class="form-group subject-row">
+                    <label for="subject6_marks">Subject 6 Marks</label>
+                    <input type="number" class="form-control" name="new_subjects[${newRowId}][subject6_marks]" required>
+                </div>
+
+                <div class="form-group subject-row">
+                    <button type="button" class="btn btn-sm btn-danger px-3 delete-row-btn" style="border-radius: 20px;">
+                        Delete
+                    </button>
+                </div>
+            `;
+
+            subjectContainer.appendChild(newSubjectRow);
+
+            // Add event listener to the delete button in the newly added row
+            const deleteButton = newSubjectRow.querySelector('.delete-row-btn');
+            deleteButton.addEventListener('click', function() {
+                subjectContainer.removeChild(newSubjectRow);
+            });
         });
 
-        // Form validation (keep this)
+        // Event listener for delete buttons in existing rows
+        subjectContainer.addEventListener('click', function(event) {
+            if (event.target.classList.contains('delete-row-btn')) {
+                event.preventDefault(); // Prevent default link behavior
+                const rowToDelete = event.target.closest('.subject-row');
+                if (rowToDelete) {
+                    // For existing rows, the delete button has a link.
+                    // Removing it from the DOM doesn't delete it from the database.
+                    // The server-side view will handle deletion based on the link.
+                    subjectContainer.removeChild(rowToDelete);
+                }
+            }
+        });
+    });
+        // Form validation
         (() => {
             'use strict'
             const forms = document.querySelectorAll('.needs-validation')
@@ -266,7 +546,28 @@
                     form.classList.add('was-validated')
                 }, false)
             })
-        })()
-  </script>
+        })();
+        // Add subject form validation
+        document.getElementById('addSubjectModal').addEventListener('submit', function (e) {
+            const inputs = this.querySelectorAll('input[type="number"]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (input.value < 0 || input.value > 100 || !input.value) {
+                    input.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+
+    </script>
 </body>
+
 </html>

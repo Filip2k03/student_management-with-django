@@ -31,7 +31,7 @@
   <h3>Subjects and Marks</h3>
   <table class="table table-bordered">
       <thead class="thead-light">
-          <tr>
+          <tr style="text-align: center;">
               <th>Year</th>
               <th>Subject</th>
               <th>Marks 1</th>
@@ -45,16 +45,16 @@
       </thead>
       <tbody>
           {% for subject in subjects %}
-              <tr>
+          <tr style="text-align: center;">
                   <td>{{ subject.year }}</td>
                   <td>Subject {{ forloop.counter }}</td>
-                  <td>{{ subject.subject1_marks }}</td>
-                  <td>{{ subject.subject2_marks }}</td>
-                  <td>{{ subject.subject3_marks }}</td>
-                  <td>{{ subject.subject4_marks }}</td>
-                  <td>{{ subject.subject5_marks }}</td>
-                  <td>{{ subject.subject6_marks }}</td>
-                  <td>{{ subject.total_marks }}</td>
+                  <td>{{ subject.subject1_marks|floatformat:0  }}</td>
+                  <td>{{ subject.subject2_marks|floatformat:0  }}</td>
+                  <td>{{ subject.subject3_marks|floatformat:0  }}</td>
+                  <td>{{ subject.subject4_marks|floatformat:0  }}</td>
+                  <td>{{ subject.subject5_marks|floatformat:0  }}</td>
+                  <td>{{ subject.subject6_marks|floatformat:0  }}</td>
+                  <td>{{ subject.total_marks|floatformat:0  }}</td>
               </tr>
           {% endfor %}
       </tbody>
@@ -62,7 +62,7 @@
   <!-- add years -->
    
    <a href=""></a>
-  <h3>Total Marks: {{ total_marks }}</h3>
+  <h3>Total Marks: {{ total_marks|floatformat:0  }}</h3>
   <div class="mt-4">
       <a class="btn btn-primary" href="{% url 'create_subject' %}">Create New Subject</a>
       <a class="btn btn-secondary" href="{% url 'student_list' %}">Back to Student List</a>
