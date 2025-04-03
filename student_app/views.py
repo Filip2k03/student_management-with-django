@@ -125,7 +125,7 @@ def edit_student(request, student_id):
 
     if request.method == "POST":
         try:
-            # Handle the main student data update
+            # Update student details
             student.name = request.POST.get('name')
             student.dob = request.POST.get('dob')
             student.nrc = request.POST.get('nrc')
@@ -135,38 +135,38 @@ def edit_student(request, student_id):
             student.address = request.POST.get('address')
             student.grade = request.POST.get('grade')
             student.country = request.POST.get('country')
+            student.save()
 
-            # Now handle the subject marks and year update for each existing subject
+            # Update existing subjects
             for subject in existing_subjects:
-                subject.year = int(request.POST.get(f'subject_year_{subject.id}'))
-                subject.subject1_marks = float(request.POST.get(f'subject1_marks_{subject.year}'))
-                subject.subject2_marks = float(request.POST.get(f'subject2_marks_{subject.year}'))
-                subject.subject3_marks = float(request.POST.get(f'subject3_marks_{subject.year}'))
-                subject.subject4_marks = float(request.POST.get(f'subject4_marks_{subject.year}'))
-                subject.subject5_marks = float(request.POST.get(f'subject5_marks_{subject.year}'))
-                subject.subject6_marks = float(request.POST.get(f'subject6_marks_{subject.year}'))
-                subject.save()  # Save the updated subject marks and year
+                subject.year = int(request.POST.get(f'subject_year_{subject.id}', subject.year))
+                subject.subject1_marks = float(request.POST.get(f'subject1_marks_{subject.year}', 0))
+                subject.subject2_marks = float(request.POST.get(f'subject2_marks_{subject.year}', 0))
+                subject.subject3_marks = float(request.POST.get(f'subject3_marks_{subject.year}', 0))
+                subject.subject4_marks = float(request.POST.get(f'subject4_marks_{subject.year}', 0))
+                subject.subject5_marks = float(request.POST.get(f'subject5_marks_{subject.year}', 0))
+                subject.subject6_marks = float(request.POST.get(f'subject6_marks_{subject.year}', 0))
+                subject.save()
 
-            # Handle multiple new subject entries
-            years = request.POST.getlist('new_subject_year')
-            subject1_marks = request.POST.getlist('new_subject1_marks')
-            subject2_marks = request.POST.getlist('new_subject2_marks')
-            subject3_marks = request.POST.getlist('new_subject3_marks')
-            subject4_marks = request.POST.getlist('new_subject4_marks')
-            subject5_marks = request.POST.getlist('new_subject5_marks')
-            subject6_marks = request.POST.getlist('new_subject6_marks')
+            # Add new subjects
+            new_years = request.POST.getlist('new_subject_year[]')
+            new_subject1_marks = request.POST.getlist('new_subject1_marks[]')
+            new_subject2_marks = request.POST.getlist('new_subject2_marks[]')
+            new_subject3_marks = request.POST.getlist('new_subject3_marks[]')
+            new_subject4_marks = request.POST.getlist('new_subject4_marks[]')
+            new_subject5_marks = request.POST.getlist('new_subject5_marks[]')
+            new_subject6_marks = request.POST.getlist('new_subject6_marks[]')
 
-            # Iterate through the submitted subject data and create new Subject objects
-            for i in range(len(years)):
-                year = years[i]
-                marks1 = subject1_marks[i]
-                marks2 = subject2_marks[i]
-                marks3 = subject3_marks[i]
-                marks4 = subject4_marks[i]
-                marks5 = subject5_marks[i]
-                marks6 = subject6_marks[i]
+            for i in range(len(new_years)):
+                year = new_years[i]
+                marks1 = new_subject1_marks[i]
+                marks2 = new_subject2_marks[i]
+                marks3 = new_subject3_marks[i]
+                marks4 = new_subject4_marks[i]
+                marks5 = new_subject5_marks[i]
+                marks6 = new_subject6_marks[i]
 
-                # Ensure all data is present and valid
+                # Validate and create new subjects
                 if year and marks1 and marks2 and marks3 and marks4 and marks5 and marks6:
                     try:
                         Subject.objects.create(
@@ -180,23 +180,21 @@ def edit_student(request, student_id):
                             subject6_marks=float(marks6)
                         )
                     except ValueError:
-                        raise ValidationError("Invalid subject marks provided.")
+                        raise ValidationError("Invalid data for new subject.")
 
-            student.save()  # Save the updated student data
-
-            # Redirect to the student list page or profile page
-            return redirect('student_list')  # Adjust this URL if necessary
+            # Redirect to the student list page
+            return redirect('student_list')
 
         except (ValueError, ValidationError) as e:
-            error_message = "Invalid data: " + str(e)
+            error_message = f"Error: {e}"
             return render(request, 'student/edit_student.html', {
-                'student': student, 
-                'existing_subjects': existing_subjects, 
+                'student': student,
+                'existing_subjects': existing_subjects,
                 'error_message': error_message
             })
 
     return render(request, 'student/edit_student.html', {
-        'student': student, 
+        'student': student,
         'existing_subjects': existing_subjects
     })
 # Delete a student
