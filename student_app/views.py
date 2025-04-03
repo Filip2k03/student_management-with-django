@@ -136,15 +136,16 @@ def edit_student(request, student_id):
             student.grade = request.POST.get('grade')
             student.country = request.POST.get('country')
 
-            # Now handle the subject marks update for each existing subject
+            # Now handle the subject marks and year update for each existing subject
             for subject in existing_subjects:
+                subject.year = int(request.POST.get(f'subject_year_{subject.id}'))
                 subject.subject1_marks = float(request.POST.get(f'subject1_marks_{subject.year}'))
                 subject.subject2_marks = float(request.POST.get(f'subject2_marks_{subject.year}'))
                 subject.subject3_marks = float(request.POST.get(f'subject3_marks_{subject.year}'))
                 subject.subject4_marks = float(request.POST.get(f'subject4_marks_{subject.year}'))
                 subject.subject5_marks = float(request.POST.get(f'subject5_marks_{subject.year}'))
                 subject.subject6_marks = float(request.POST.get(f'subject6_marks_{subject.year}'))
-                subject.save()  # Save the updated subject marks
+                subject.save()  # Save the updated subject marks and year
 
             # Handle multiple new subject entries
             years = request.POST.getlist('new_subject_year')
@@ -170,7 +171,7 @@ def edit_student(request, student_id):
                     try:
                         Subject.objects.create(
                             student=student,
-                            year=year,
+                            year=int(year),
                             subject1_marks=float(marks1),
                             subject2_marks=float(marks2),
                             subject3_marks=float(marks3),
@@ -386,7 +387,6 @@ def export_subjects(request):
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "Subjects"
-
     # Add column headers
     headers = ["Student Name", "Year", "Subject", "Marks 1", "Marks 2", "Marks 3", "Marks 4", "Marks 5", "Marks 6", "Total Marks"]
     for col_num, header in enumerate(headers, 1):
